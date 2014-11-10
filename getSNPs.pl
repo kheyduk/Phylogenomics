@@ -12,6 +12,7 @@ my @files = glob("*$ending");
 
 my %PI;
 my %poly;
+my %lengths;
 
 foreach my $file (@files) {
 	my $length;
@@ -25,6 +26,7 @@ foreach my $file (@files) {
 			$length = $io_obj->length();
 			my @bases = split("", $seq);
 			$hash{$header} = \@bases;
+			$lengths{$file} = $length;
 			}
 		
 		my @pos = (0..$length);
@@ -103,9 +105,9 @@ foreach my $file (sort keys %poly) {
 close POS;
 
 open OUT, ">>SNPS.counts.txt";
-print OUT "fileID\tinformative\tpoly noninformative\n";
+print OUT "fileID\tinformative\tpoly noninformative\ttotal length\n";
 foreach my $file (@files) {
-	print OUT "$file\t$sizePI{$file}\t$sizepoly{$file}\n";
+	print OUT "$file\t$sizePI{$file}\t$sizepoly{$file}\t$lengths{$file}\n";
 	}
 close OUT;
 
