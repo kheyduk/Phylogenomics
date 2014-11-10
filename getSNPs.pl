@@ -8,14 +8,15 @@ use Bio::SeqIO;
 #two taxa) or simply has a SNP in it, SNPS.counts.txt lists informative and polymorphic sites per file.
 
 my $ending = $ARGV[0]; #please give an ending that all your alignment files have in commong (ie, .fasta).
-my @files = glob("$ending"); 
-my @headers;
-my %hash;
+my @files = glob("*$ending"); 
+
 my %PI;
 my %poly;
 
 foreach my $file (@files) {
 	my $length;
+	my @headers;
+	my %hash = ();
 	my $fasta = Bio::SeqIO->new(-format => 'fasta', -file => $file);
 		while (my $io_obj = $fasta -> next_seq() ) {
 			my $header = $io_obj->id();
@@ -26,9 +27,10 @@ foreach my $file (@files) {
 			$hash{$header} = \@bases;
 			}
 		
-		my $count = 0;
-		until ($count == $length+1) { #iterate over each base until you reach the end of alignment
-			my @position;
+		my @pos = (0..$length);
+		foreach my $count (@pos) { #iterate over each base until you reach the end of alignment
+			my @position = ();
+			#print "$count\t$length\n";
 			#print "$count\n";
 			foreach my $header (@headers) {
 				my $base = @{$hash{$header}}[$count];
@@ -41,8 +43,8 @@ foreach my $file (@files) {
 					}
 				}
 			#print "@position\n";
-			$count++;
-			my %counts;
+			
+			my %counts = ();
 			my @unique = grep !$counts{$_}++, @position; #how many unique elements?
 			my $bases = @unique;
 			if ($bases == 1) { 
@@ -50,6 +52,7 @@ foreach my $file (@files) {
 				}
 			else {
 				my $counter = 0;
+				my $countSNP = 0;
 				foreach my $unique (@unique) {
 					my @greps = grep (/$unique/, @position);
 					#print "$count\t@greps\n";
@@ -64,10 +67,10 @@ foreach my $file (@files) {
 					}
 				#	print "$count\t$counter\n";
 					if ($counter >= 2) {
-						$PI{$file}{$count} = 0;
+						$PI{$file}{($count+1)} = 0;
 						}
 					else {
-						$poly{$file}{$count} = 0;
+						$poly{$file}{($count+1)} = 0;
 						}
 					
 				}
