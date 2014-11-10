@@ -1,6 +1,10 @@
-This repository contains Perl scripts written for phylogenomics work, particularly in streamlining gene capture data and
-analyzing species trees from gene trees. 
+README for Phylogenomics repo
+Karolina Heyduk 2014
 
-If a script is associated with a publication it will be documented in that script. 
+This repository is a place I'll store somewhat random scripts I've created for various phylogenomic uses, including:
 
-All questions can be sent to kheyduk@plantbio.uga.edu.  
+-file conversion/formatting
+-alignment manipulation
+-tree manipulations
+
+Please be aware that none of this is guaranteed to work on your data, as it was written largely for mine. I've tried to make most of these as user friendly as possible, some modifications might be necessary for them to work for you. All scripts are in Perl, using BioPerl heavily.
