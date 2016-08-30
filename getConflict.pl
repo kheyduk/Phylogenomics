@@ -1,5 +1,10 @@
 #!/usr/bin/perl
-#written by Karolina Heyduk, UGA kheyduk@plantbio.uga.edu. 2014
+#written by Karolina Heyduk, UGA heyduk@uga.edu
+#output: Five categories, Agreement, Conflict, Agreement w/ missing taxa, Conflict w/ missing taxa, and Missing (meaning only
+#on of the tips in a given comparison is present in the tree).
+#In each category, the script will output the tips, followed by "level", count, and average BS value for all gene trees
+#in that category. "Level" refers to support level: "80">80, "50" between 50 and 79, "49" between 20 and 49, 0 is less than 
+#20. Can be categorized as "strong agreement", "agreement", "weak disagreement", "strong disagreement". 
 
 use strict;
 #use 5.010;
